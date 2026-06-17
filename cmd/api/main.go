@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+		"fmt"
+		"gotodo/internal/service"
+		"os"
+)
 
 func main(){
-		fmt.Println("Hello World")
+		if err := service.RootCmd.Execute(); err != nil{
+				fmt.Println(err)
+				os.Exit(1)
+		}
 }
