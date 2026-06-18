@@ -6,20 +6,11 @@ import (
 	"os"
 )
 
-func (r *Repository) GetAll() ([]models.Task, error) {
-	data, err := os.ReadFile(r.filePath)
+func (r *Repository) Save(task models.Task) error {
+	data, err := json.MarshalIndent(task, "", "  ")
 	if err != nil {
-		if os.IsNotExist(err) {
-			return []models.Task{}, nil
-		}
-		return nil, err
+		return err
 	}
 
-	var tasks []models.Task
-	err = json.Unmarshal(data, &tasks)
-	if err != nil {
-		return nil, err
-	}
-
-	return tasks, nil
+	return os.WriteFile(r.filePath, data, 0644)
 }
