@@ -20,4 +20,5 @@ func main() {
 	}
 
 	Manager := repository.NewRepository("tasks.json") // must run or build app with: go run cmd/api/main.go
+	Service := service.NewTaskService(Manager)
 }
