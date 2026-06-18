@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Task struct {
-	ID       string    `json:"id"`
+	ID       int       `json:"id"`
 	Name     string    `json:"name"`
 	Priority int       `json:"priority"`
 	Due      time.Time `json:"time"`
