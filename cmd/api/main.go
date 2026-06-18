@@ -18,4 +18,6 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	Manager := repository.NewRepository("tasks.json") // must run or build app with: go run cmd/api/main.go
 }
