@@ -5,7 +5,7 @@ import (
 	"gotodo/internal/models"
 )
 
-func (r *Repository) Get(id string) (models.Task, error) {
+func (r *Repository) Get(id int) (models.Task, error) {
 	tasks, err := r.GetAll()
 	if err != nil {
 		return models.Task{}, err

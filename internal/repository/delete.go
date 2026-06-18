@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func (r *Repository) Delete(id string) error {
+func (r *Repository) Delete(id int) error {
 	tasks, err := r.GetAll()
 	if err != nil {
 		return err
@@ -19,7 +19,7 @@ func (r *Repository) Delete(id string) error {
 	for _, task := range tasks {
 		if task.ID == id {
 			found = true
-			continue
+			break
 		}
 		updatedTasks = append(updatedTasks, task)
 	}
