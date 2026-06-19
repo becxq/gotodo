@@ -3,17 +3,10 @@ package service
 import (
 	"errors"
 	"gotodo/internal/models"
-	"strconv"
 	"time"
-
-	"github.com/spf13/cobra"
 )
 
-var name string
-var priority string
-var due string
-
-func (s *TaskService) Add(cmd *cobra.Command, args []string) error {
+func (s *TaskService) Add(priority int, name, due string) error {
 	// must have --priority (1 to 3) and --due (none or with date, time or date:time)
 	// and --name of the task mochiron
 	// tasks:
@@ -22,8 +15,7 @@ func (s *TaskService) Add(cmd *cobra.Command, args []string) error {
 	// 3. save task
 
 	// validate priority
-	pr, err := strconv.Atoi(priority)
-	if err != nil {
+	if priority >= '0' && priority <= '9' {
 		return errors.New("Priority must be an integer (1 to 3; lower to higher)")
 	}
 
@@ -58,9 +50,15 @@ func (s *TaskService) Add(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return errors.New("error of getting tasks")
 	}
-	lastTask := tasks[0]
 
-	task := models.Task{ID: lastTask.ID + 1, Name: name, Due: t, Priority: pr, Status: false}
+	var id int
+	if len(tasks) == 0 {
+		id = 0
+	} else {
+		id = tasks[0].ID + 1
+	}
+
+	task := models.Task{ID: id, Name: name, Due: t, Priority: priority, Status: false}
 
 	return s.repo.Save(task)
 }
