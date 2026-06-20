@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -69,7 +70,25 @@ func (c *CommandManager) NewListCmd() *cobra.Command {
 			}
 
 			for i := range tasks {
-				fmt.Println(tasks[i].ID, tasks[i].Name, tasks[i].Due, tasks[i].Priority, tasks[i].Status)
+				priority := "Low"
+				switch tasks[i].Priority {
+				case 1:
+					priority = "Low"
+				case 2:
+					priority = "Medium"
+				case 3:
+					priority = "High"
+				}
+
+				fmt.Printf("ID: %d| %s Task: %s is ", tasks[i].ID, priority, tasks[i].Name)
+
+				if tasks[i].Status {
+					color.New(color.FgGreen).Print("Done ")
+				} else {
+					color.New(color.FgYellow).Print("Undone ")
+				}
+
+				fmt.Printf("till %s\n", tasks[i].Due.Format("2026-01-02 15:04:02"))
 			}
 		},
 	}
