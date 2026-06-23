@@ -2,8 +2,11 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"gotodo/internal/models"
 	"time"
+
+	str2duration "github.com/xhit/go-str2duration/v2"
 )
 
 func (s *TaskService) Add(priority int, name, due string) error {
@@ -36,7 +39,7 @@ func (s *TaskService) Add(priority int, name, due string) error {
 
 	t, err := time.Parse(layout, due)
 	if err != nil {
-		duration, err = time.ParseDuration(due)
+		duration, err = str2duration.ParseDuration(due)
 	}
 
 	if err != nil {
@@ -44,6 +47,8 @@ func (s *TaskService) Add(priority int, name, due string) error {
 	}
 
 	t = time.Now().Add(duration)
+
+	fmt.Println(t)
 
 	// getting id of last task
 	tasks, err := s.repo.GetAll()
@@ -55,7 +60,7 @@ func (s *TaskService) Add(priority int, name, due string) error {
 	if len(tasks) == 0 {
 		id = 0
 	} else {
-		id = tasks[0].ID + 1
+		id = tasks[len(tasks)-1].ID + 1
 	}
 
 	task := models.Task{ID: id, Name: name, Due: t, Priority: priority, Status: false}
