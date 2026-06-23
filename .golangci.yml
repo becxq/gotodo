@@ -1,0 +1,40 @@
+version: "2"
+
+run:
+  # The default timeout is 1m, increasing to 5m prevents unexpected CI kills
+  timeout: 5m
+  # Include test files in linting checks
+  tests: true
+
+linters:
+  # Disables all linters first so you can explicitly choose what runs
+  disable-all: true
+  enable:
+    ## --- Recommended Default & Bug Detection Linters ---
+    - errcheck      # Checks for unhandled error return values
+    - govet         # Official Go tool for catching suspicious constructs
+    - staticcheck   # Advanced static analysis for bugs and performance issues
+    - unused        # Finds unused constants, variables, functions, and types
+    - ineffassign   # Detects assignments to variables that are never read
+
+    ## --- Code Quality & Styling ---
+    - revive        # Drop-in, high-performance replacement for the legacy 'golint'
+    - copyloopvar   # Essential for Go 1.22+: catches loop variable reference traps
+    - misspell      # Finds common spelling mistakes in comments and text
+    - unconvert     # Identifies unnecessary type conversions
+
+    ## --- Safety & Best Practices ---
+    - bodyclose     # Ensures HTTP response bodies are successfully closed
+    - errorlint     # Finds problematic code with Go's error wrapping scheme
+    - goconst       # Recommends repeated strings be turned into constants
+
+formatters:
+  # Enables code formatting compliance checks
+  enable:
+    - goimports     # Checks that imports are formatted and sorted correctly
+
+issues:
+  # Maximum count of issues with the same text. 0 means unlimited
+  max-same-issues: 3
+  # Maximum issues count per linter. 0 means unlimited
+  max-issues-per-linter: 0
