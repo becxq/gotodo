@@ -2,15 +2,13 @@ package commands
 
 import (
 	"fmt"
+	"gotodo/internal/service"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/fatih/color"
+	str2duration "github.com/xhit/go-str2duration/v2"
 )
-
-var priority int
-var due string
-var name string
-var id string
 
 func (c *CommandManager) NewAddCmd() *cobra.Command {
 	addCmd := &cobra.Command{
@@ -63,15 +61,39 @@ func (c *CommandManager) NewListCmd() *cobra.Command {
 	return &cobra.Command{
 		Use: "list",
 		Run: func(cmd *cobra.Command, args []string) {
-			tasks, err := c.TaskManager.List()
+			filters := service.FilterKeys{
+				Priority: nil,
+				Status: nil,
+				Due: nil,
+			}
+
+			if cmd.Flags().Changed("priority") {
+				filters.Priority = &p
+			}
+
+			if d != ""{
+				dur, err := str2duration.ParseDuration(d)
+				if err != nil{
+					fmt.Println("Error", err)
+					return
+				}
+
+				filters.Due = &dur
+			}
+
+			if cmd.Flags().Changed("status"){
+				filters.Status = &s
+			}
+
+			tasks, err := c.TaskManager.List(filters)
 			if err != nil {
 				fmt.Println("Error: ", err)
 				return
 			}
 
-			for i := range tasks {
+			for _, task := range tasks {
 				priority := "Low"
-				switch tasks[i].Priority {
+				switch task.Priority {
 				case 1:
 					priority = "Low"
 				case 2:
@@ -80,18 +102,26 @@ func (c *CommandManager) NewListCmd() *cobra.Command {
 					priority = "High"
 				}
 
-				fmt.Printf("ID: %d| %s Task: %s is ", tasks[i].ID, priority, tasks[i].Name)
+				fmt.Printf("ID: %d| %s Task: %s is ", task.ID, priority, task.Name)
 
-				if tasks[i].Status {
+				if task.Status {
 					color.New(color.FgGreen).Print("Done ")
 				} else {
 					color.New(color.FgYellow).Print("Undone ")
 				}
 
-				fmt.Printf("till %s\n", tasks[i].Due.Format("2026-01-02 15:04:02"))
+				fmt.Printf("till %s\n", task.Due.Format("2006-01-02 15:04"))
 			}
 		},
 	}
+
+	listCmd.Flags().IntVarP(&p, "priority", "p", 0, "Set a priority for a tasks; from 1 to 3")
+	listCmd.Flags().BoolVarP(&s, "status", "s", false, "Set a status for a tasks; =true or =false")
+	listCmd.Flags().StringVarP(&d, "due", "d", "", "Set a due for a task; [num][unit]")
+
+	listCmd.Flags().Lookup("status").DefValue = ""
+
+	return listCmd
 }
 
 func (c *CommandManager) NewClearCmd() *cobra.Command {
