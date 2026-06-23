@@ -1,14 +1,13 @@
 package repository
 
 import (
-	"errors"
 	"os"
 )
 
 func (r *Repository) Clear() error {
-	err := os.Truncate("example.txt", 0)
+	err := os.WriteFile(r.filePath , []byte("[]"), 0644)
 	if err != nil {
-		return errors.New("Failed to clear json file")
+		return err
 	}
 
 	return nil
