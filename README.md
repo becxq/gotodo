@@ -7,17 +7,12 @@ gotodo is a command-line todo application built in Go that allows you to manage 
 ### Prerequisites
 - Go 1.26.4 or later [3](#1-2) 
 
-### Build
+## Install
 ```bash
-go build cmd/api/main.go
+go install github.com/becxq/gotodo/cmd/api@latest
 ```
 
-### Run
-```bash
-go run cmd/api/main.go
-```
-
-After building, you can run the binary directly with the `gotodo` command. [1](#1-0) 
+After installing, you can run the binary directly with the `gotodo` command. [1](#1-0) 
 
 ## Usage
 

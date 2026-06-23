@@ -1,4 +1,4 @@
-module gotodo
+module github.com/becxq/gotodo
 
 go 1.26.4
 
