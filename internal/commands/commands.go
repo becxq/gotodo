@@ -12,6 +12,12 @@ var name string
 var id string
 
 func (c *CommandManager) NewAddCmd() *cobra.Command {
+	var (
+		priority int
+ 		due string
+ 		name string
+	)
+
 	addCmd := &cobra.Command{
 		Use: "add",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -29,6 +35,7 @@ func (c *CommandManager) NewAddCmd() *cobra.Command {
 }
 
 func (c *CommandManager) NewRmCmd() *cobra.Command {
+	var id string
 	rmCmd := &cobra.Command{
 		Use: "rm",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -44,6 +51,7 @@ func (c *CommandManager) NewRmCmd() *cobra.Command {
 }
 
 func (c *CommandManager) NewDoneCmd() *cobra.Command {
+	var id string
 	doneCmd := &cobra.Command{
 		Use: "done",
 		Run: func(cmd *cobra.Command, args []string) {
@@ -59,7 +67,13 @@ func (c *CommandManager) NewDoneCmd() *cobra.Command {
 }
 
 func (c *CommandManager) NewListCmd() *cobra.Command {
-	return &cobra.Command{
+	var (
+		p int
+		s bool
+		d string
+	)
+
+	listCmd := &cobra.Command{
 		Use: "list",
 		Run: func(cmd *cobra.Command, args []string) {
 			tasks, err := c.TaskManager.List()
