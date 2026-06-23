@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gotodo/internal/commands"
-	"gotodo/internal/repository"
-	"gotodo/internal/service"
+	"github.com/becxq/gotodo/internal/commands"
+	"github.com/becxq/gotodo/internal/repository"
+	"github.com/becxq/gotodo/internal/service"
 )
 
 func main() {

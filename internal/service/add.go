@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
-	"gotodo/internal/models"
+	"github.com/becxq/gotodo/internal/models"
 	"time"
 
 	str2duration "github.com/xhit/go-str2duration/v2"

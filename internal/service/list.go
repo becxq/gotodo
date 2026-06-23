@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gotodo/internal/models"
+	"github.com/becxq/gotodo/internal/models"
 	"time"
 )
 

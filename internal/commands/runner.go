@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"gotodo/internal/service"
+	"github.com/becxq/gotodo/internal/service"
 
 	"github.com/spf13/cobra"
 )

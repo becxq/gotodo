@@ -2,7 +2,7 @@ package repository
 
 import (
 	"errors"
-	"gotodo/internal/models"
+	"github.com/becxq/gotodo/internal/models"
 )
 
 func (r *Repository) Delete(id int) error {

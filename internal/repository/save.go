@@ -2,7 +2,7 @@ package repository
 
 import (
 	"encoding/json"
-	"gotodo/internal/models"
+	"github.com/becxq/gotodo/internal/models"
 	"os"
 )
 

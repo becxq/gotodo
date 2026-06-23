@@ -1,6 +1,6 @@
 package service
 
-import "gotodo/internal/repository"
+import "github.com/becxq/gotodo/internal/repository"
 
 type TaskService struct {
 	repo *repository.Repository
